@@ -1,0 +1,83 @@
+﻿<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    let lang = {
+        "sProcessing": "İşleniyor...",
+        "sLengthMenu": "Sayfada _MENU_ Kayıt Göster",
+        "sZeroRecords": "Eşleşen Kayıt Bulunmadı",
+        "sInfo": "  _TOTAL_ Kayıttan _START_ - _END_ Arası Kayıtlar",
+        "sInfoEmpty": "Kayıt Yok",
+        "sInfoFiltered": "( _MAX_ Kayıt İçerisinden Bulunan)",
+        "sInfoPostFix": "",
+        "sSearch": "Ara:",
+        "sUrl": "",
+        "oPaginate": {
+            "sFirst": "İlk",
+            "sPrevious": "Önceki",
+            "sNext": "Sonraki",
+            "sLast": "Son"
+        }
+    };
+
+    let appdt = (u, c, o) => $('#mainTable').DataTable({
+        order: [[1, 'asc']],
+        colReorder: true,
+        serverSide: true,
+        ajax: {
+            url: u,
+            type: 'POST'
+        },
+        "language": lang,
+        columns: [
+            {
+                data: 'enabled',
+                title: 'Durum',
+                searchable: true,
+                width: '5%',
+                className: 'text-center cell-icon',
+                render: (d, t, r, m) => r.enabled ? '<i class="fa fa-stop text-success"></i>' : '<i class="fa fa-stop text-danger"></i>'
+            },
+            ...c,
+            {
+                data: 'date',
+                width: '15%',
+                title: 'Oluşturma Tarihi',
+                searchable: true,
+            },
+            {
+                data: 'userName',
+                width: '15%',
+                title: 'Oluşturan',
+                searchable: true,
+            },
+            {
+                title: 'İşlem',
+                width: '8%',
+                sortable: false,
+                render: (d, t, r, m) => {
+                    return `
+                                            <div class="d-flex justify-content-center">
+                                                <a href="/@ViewContext.RouteData.Values["Controller"]/edit/${r.id}"  class="text-primary cell-icon">
+                                                      <i class="nav-icon fas fa-id-card"></i>
+                                                </a>
+                                            </div>
+                                            `;
+                }
+            }
+        ]
+    }).on('draw.dt', o);
+    let createIcon = () => $('#mainTable_filter').append('<a href="@Url.Action("Create")" class="btn btn-sm btn-success ml-3"><i class="fa fa-plus"></i></a>');
+
+$(() => {
+        $('#mainTable tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+});
+
+</script>

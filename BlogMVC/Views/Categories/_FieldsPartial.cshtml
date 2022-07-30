@@ -1,0 +1,36 @@
+﻿@using BlogMVC.Data
+@model Category
+
+<ul class="nav nav-tabs" role="tablist">
+    @if (ViewContext.RouteData.Values["action"]!.ToString() == "Edit")
+    {
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#@(Model.GetType().Name)_tab0_@(Model.Id)" role="tab" aria-selected="false">Genel</a></li>
+    }
+</ul>
+<div class="tab-content">
+    <div class="tab-pane p-3 active" id="@(Model.GetType().Name)_tab0_@(Model.Id)" role="tabpanel">
+        <div class="form-group row">
+            <label asp-for="Title" class="col-md-2 col-form-label"></label>
+            <div class="col-md-4">
+                <input class="form-control" asp-for="Title" autofocus="on">
+                <span asp-validation-for="Title"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Description" class="col-md-2 col-form-label"></label>
+            <div class="col-md-4">
+                <input class="form-control" asp-for="Description">
+                <span asp-validation-for="Description"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" asp-for="Enabled"></label>
+            <div class="col-md-4">
+                <select class="form-control" asp-for="Enabled" asp-items="@Html.GetEnumSelectList<Status>()">
+                <option selected value="">Seçiniz</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+</div>

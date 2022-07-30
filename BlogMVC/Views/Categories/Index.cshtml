@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Kategoriler";
+    ViewData["Controller"] = "Kategoriler";
+}
+@await Component.InvokeAsync("PageHeader")
+<div class="card mb-2">
+    <div class="card-body">
+        <table class="table table-xs table-striped table-bordered" id="mainTable"></table>
+
+    </div>
+</div>
+@section scripts {
+    <partial name="_DataTablesPartial" />
+    <script>
+        $(() => {
+            var columns = [
+                {
+                    data: 'title',
+                    title: 'Kategori Adı',
+
+                },
+                {
+                    data: 'count',
+                    title: 'Blog Sayısı',
+
+                },
+            ];
+            appdt('/categories/getdata', columns, () => { });
+            createIcon();
+        });
+    </script>
+
+}

@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - Blog</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="~/lib/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="~/css/adminlte.min.css" />
+</head>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            @*<img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">*@
+        </div>
+
+        <partial name="_TopBarPartial" />
+        @if (TempData["success"] is not null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check"></i> @TempData["success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @if (TempData["error"] is not null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa fa-exclamation-triangle"></i> @TempData["error"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <partial name="_LeftSidePartial" />
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="m-0">@ViewData["Title"]</h1>
+                        </div><!-- /.col -->
+                        <div class="col-md-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">AnaSayfa</a></li>
+                                <li class="breadcrumb-item active"><a href="/@ViewContext.RouteData.Values["Controller"]">@ViewData["Controller"]</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @RenderBody()
+            <!-- /.content -->
+        </div>
+        <aside class="control-sidebar control-sidebar-dark">
+        </aside>
+        <partial name="_FooterPartial" />
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/chart.js/Chart.min.js"></script>
+    <script src="~/lib/adminlte.js"></script>
+    <script src="~/lib/datatables/jquery.dataTables.js"></script>
+    <script src="~/lib/inputmask/inputmask.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

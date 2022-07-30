@@ -1,0 +1,28 @@
+﻿@using BlogMVC.Data
+@model Category
+@{
+    ViewData["Title"] = "Kategori Ekle";
+}
+
+@await Component.InvokeAsync("PageHeader")
+<div>
+    <form method="post" novalidate>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h4 class="header-title">Yeni Kategori Ekle</h4>
+                        <p>Yeni Kategori kaydı eklemek için aşağıdaki formu kullanınız...</p>
+                        <partial name="_FieldsPartial" model="Model" />
+                        <partial name="_SaveButtonsPartial" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts{
+<partial name="_ValidationscriptsPartial" />
+
+}
