@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Rozetler";
+    ViewData["Controller"] = "Rozetler";
+}
+@await Component.InvokeAsync("PageHeader")
+<div class="card mb-2">
+    <div class="card-body">
+        <table class="datatable hover  compact stripe order-column " id="mainTable"></table>
+
+    </div>
+</div>
+@section scripts {
+    <partial name="_DataTablesPartial" />
+    <script>
+        $(() => {
+            var columns = [
+                {
+                    data: 'title',
+                    title: 'Kategori Adı',
+
+                },
+                {
+                    data: 'count',
+                    title: 'Blog Sayısı',
+
+                },
+            ];
+            appdt('/categories/getdata', columns, () => { });
+            createIcon();
+        });
+    </script>
+
+}

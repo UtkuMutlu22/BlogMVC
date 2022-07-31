@@ -68,6 +68,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Rossette\Create.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\Rossette\Edit.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\Rossette\Index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\Rossette\_FieldsPartial.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="Views\SubCategories\Create.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -72,6 +72,7 @@ namespace BlogMVC.Controllers
             model.DateCreated = DateTime.Now;
             model.Enabled = Status.Enabled;
             context.Categories.Add(model);
+
             try
             {
                 await context.SaveChangesAsync();
