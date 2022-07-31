@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogMVC.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220731124948_AddCategory")]
+    partial class AddCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +29,11 @@ namespace BlogMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Enabled")
+                        .HasColumnType("int");
 
                     b.Property<string>("EntityName")
                         .IsRequired()
@@ -37,26 +42,20 @@ namespace BlogMVC.Migrations
                     b.Property<Guid?>("ItemId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Blog", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BlogId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CategoryId")
@@ -91,15 +90,13 @@ namespace BlogMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BlogId");
-
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("SubCategoryId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blogs", (string)null);
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Category", b =>
@@ -130,7 +127,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Comment", b =>
@@ -170,7 +167,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Role", b =>
@@ -236,7 +233,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Rosettes", (string)null);
+                    b.ToTable("Rosettes");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.SubCategory", b =>
@@ -270,7 +267,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SubCategories", (string)null);
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.User", b =>
@@ -480,17 +477,14 @@ namespace BlogMVC.Migrations
                     b.HasOne("BlogMVC.Data.User", "User")
                         .WithMany("Transactions")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Blog", b =>
                 {
-                    b.HasOne("BlogMVC.Data.Blog", null)
-                        .WithMany("BlogList")
-                        .HasForeignKey("BlogId");
-
                     b.HasOne("BlogMVC.Data.Category", "Category")
                         .WithMany("Blogs")
                         .HasForeignKey("CategoryId")
@@ -639,8 +633,6 @@ namespace BlogMVC.Migrations
 
             modelBuilder.Entity("BlogMVC.Data.Blog", b =>
                 {
-                    b.Navigation("BlogList");
-
                     b.Navigation("CommentList");
                 });
 

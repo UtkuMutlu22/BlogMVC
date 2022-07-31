@@ -19,6 +19,7 @@ namespace BlogMVC.Data
         public virtual ICollection<User> FollowList { get; set; } = new HashSet<User>();
         public virtual ICollection<Transaction> Transactions { get; set; } = new HashSet<Transaction>();
         public virtual ICollection<Blog> Blogs { get; set; } = new HashSet<Blog>();
+        public virtual ICollection<SubCategory> SubCategories { get; set; } = new HashSet<SubCategory>();
         public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
         public virtual ICollection<Rosette> Rosettes { get; set; } = new HashSet<Rosette>();
@@ -58,6 +59,12 @@ namespace BlogMVC.Data
               .WithOne(p => p.User)
               .HasForeignKey(p => p.UserId)
               .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasMany(p => p.SubCategories)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

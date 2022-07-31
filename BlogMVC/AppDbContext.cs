@@ -32,47 +32,50 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
 
     public override int SaveChanges()
     {
-        //AddToTransactions();
+        AddToTransactions();
         return base.SaveChanges();
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        //AddToTransactions();
+        AddToTransactions();
         return base.SaveChangesAsync(cancellationToken);
     }
-    //private void AddToTransactions()
-    //{
+    private void AddToTransactions()
+    {
 
-    //    using var scope = Sys.App!.Services.CreateScope();
-    //    var httpContextAccessor = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+        using var scope = Sys.App!.Services.CreateScope();
+        var httpContextAccessor = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
 
-    //    ChangeTracker.Entries().ToList().ForEach(p =>
-    //    {
-    //        if (p.Entity is EntityBase)
-    //        {
-    //            var commandText = @"insert into Transactions 
-    //                    (Id, DateTime, UserId,ItemId) 
-    //                    values 
-    //                    (newid(), @DateTime, @ItemId);";
+        ChangeTracker.Entries().ToList().ForEach(p =>
+        {
+            if (p.Entity is EntityBase)
+            {
+                var commandText = @"insert into Transactions 
+                        (Id, DateTime, EntityName, UserId, Type, ItemId) 
+                        values 
+                        (newid(), @DateTime, @EntityName, @UserId, @Type, @ItemId);";
 
-    //            Guid itemId = Guid.Empty;
+                Guid itemId = Guid.Empty;
 
-    //            p.CurrentValues.TryGetValue("Id", out itemId);
+                p.CurrentValues.TryGetValue("Id", out itemId);
 
-    //            Database.ExecuteSqlRaw(commandText,
-    //                new SqlParameter("@DateTime", DateTime.Now),
-    //                new SqlParameter("@UserId", httpContextAccessor.HttpContext!.User?.FindFirst(ClaimTypes.NameIdentifier)!.Value),
-    //                new SqlParameter("@ItemId", itemId));
-    //        }
-    //    });
+                Database.ExecuteSqlRaw(commandText,
+                    new SqlParameter("@DateTime", DateTime.Now),
+                    new SqlParameter("@EntityName", p.Entity.GetType().Name),
+                    new SqlParameter("@UserId", httpContextAccessor.HttpContext!.User?.FindFirst(ClaimTypes.NameIdentifier)!.Value),
+                    new SqlParameter("@Type", p.State),
+                    new SqlParameter("@ItemId", itemId));
+            }
+        });
 
-    //}
+    }
 
     public virtual DbSet<Blog> Blogs { get; set; }
     public virtual DbSet<Category> Categories { get; set; }
     public virtual DbSet<Comment> Comments { get; set; }
     public virtual DbSet<Rosette> Rosettes { get; set; }
     public virtual DbSet<Transaction> Transactions { get; set; }
+    public virtual DbSet<SubCategory> SubCategories { get; set; }
 
 }

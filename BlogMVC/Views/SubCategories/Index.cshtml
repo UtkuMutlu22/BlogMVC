@@ -1,6 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Kategoriler";
-    ViewData["Controller"] = "Kategoriler";
+    ViewData["Title"] = "Alt Kategoriler";
+    ViewData["Controller"] = "Alt Kategoriler";
 }
 @await Component.InvokeAsync("PageHeader")
 <div class="card mb-2">
@@ -16,6 +16,11 @@
             var columns = [
                 {
                     data: 'title',
+                    title: 'Alt Kategori Adı',
+
+                },
+                {
+                    data: 'category',
                     title: 'Kategori Adı',
 
                 },
@@ -25,7 +30,7 @@
 
                 },
             ];
-            appdt('/categories/getdata', columns, () => { });
+            appdt('/subCategories/getdata', columns, () => { });
             createIcon();
         });
     </script>

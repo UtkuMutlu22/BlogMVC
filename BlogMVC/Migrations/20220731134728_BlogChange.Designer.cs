@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogMVC.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220731134728_BlogChange")]
+    partial class BlogChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +49,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Blog", b =>
@@ -99,7 +101,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blogs", (string)null);
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Category", b =>
@@ -130,7 +132,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Comment", b =>
@@ -170,7 +172,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.Role", b =>
@@ -236,7 +238,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Rosettes", (string)null);
+                    b.ToTable("Rosettes");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.SubCategory", b =>
@@ -270,7 +272,7 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SubCategories", (string)null);
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("BlogMVC.Data.User", b =>
